@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset = "ISO-8859-1" />
+      <link href = "css/styles.css" rel = "stylesheet"/>
+      <title>Chicken Test Application</title>
+      <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script>
+      $(document).ready(function() {
+         $("button").click(function(event) {
+            type = document.getElementById("type").value
+            amount = document.getElementById("amount").value
+            type2 = document.getElementById("type2").value
+            amount2 = document.getElementById("amount2").value
+            form = document.getElementById("form")
+            form2 = document.getElementById("form2")
+            form3 = document.getElementById("form3")
+            amount3 = document.getElementById("amount3").value
+            
+			form.action = "http://localhost:8080/buy/" + amount + "/" + type
+			form2.action = "http://localhost:8080/sell/" + amount2 + "/" + type2
+
+			form3.action = "http://localhost:8080/pass/" + amount3
+			
+         });
+      });
+   </script>   </head>
+   <body>
+      <div class="mt-2 mb-3">
+      
+<h2 class="text-center">Chicken Test</h2>
+</div>
+<div>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Cash</th>
+                        <th>Eggs</th>
+                        <th>Chicken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="f : ${farm}">
+                    <td th:text="${f.date}"></td>
+                    <td th:text="${f.cash}"></td>
+                    <td th:text="${eggs}"></td>
+                    <td th:text="${chickens}"></td>
+            </tbody>
+            </table>
+</div>
+
+<div>
+
+<h2>Details</h2>
+            <p th:text="${response}" />
+            <p th:text="${respStatus}" /> 
+</div>
+
+
+<br>
+<br>
+<h2 class="text-center">Actions</h2>
+
+<div class="row">
+<h3>Market</h3>
+<div class="col-6">
+	<p>  <form id="form" autocomplete="off" action="#" 
+      th:object="${type}" method="post" class="form-horizontal"
+      role="form">
+    <input type="number" id="amount" name="amount"  th:placeholder="Amount"
+           class="form-control" required/>
+    <input type="text" id="type" name="type"  th:placeholder="Type"
+           class="form-control" required/>
+    
+    <button type="submit" class="buy">BUY</button>
+</form></p>
+</div>
+<div class="col-6">
+<p>  <form id="form2" autocomplete="off" action="#" 
+      th:object="${type}" method="post" class="form-horizontal"
+      role="form">
+    <input type="number" id="amount2" name="amount2"  th:placeholder="Amount"
+           class="form-control" required/>
+    <input type="text" id="type2" name="type2"  th:placeholder="Type"
+           class="form-control" required/>
+    
+    <button type="submit" class="sell">SELL</button>
+</form></p>
+</div>
+</div>
+
+<div class="row">
+<h3>Days</h3>
+<p>  <form id="form3" autocomplete="off" action="#" 
+      th:object="${type}" method="post" class="form-horizontal"
+      role="form">
+    <input type="number" id="amount3" name="amount3"  th:placeholder="Amount"
+           class="form-control" required/>
+    
+    <button type="submit" class="pass">PASS DAYS</button>
+</form></p>
+
+</div>
+<div class="row">
+<h5>To watch more details about each, click below:</h5>
+<a th:href="@{/chickens}">Chickens</a>
+
+<a th:href="@{/eggs}">Eggs</a>
+
+<a th:href="@{/farm}">Farm</a>
+</div>
+   </body>
+</html>
